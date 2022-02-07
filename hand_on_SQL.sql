@@ -185,3 +185,21 @@
 --  from dept;
 
 -- 3.2 COMBINING RELATED ROWS
+-- You want to return rows from multiple tables by joining on a known common column or joining on columns that share common values
+
+-- select e.ename, d.loc
+-- from 
+-- 	emp as e, dept as d
+-- where 
+-- 	e.deptno = d.deptno and
+--     e.deptno = 10;
+
+-- ** This solution is an example of join, more accurately equi-join
+-- ** A join is an operation that combines rows from two tables into one
+-- ** An alternative solution makes use of an explicit JOIN clause (the INNER keyword is optional)
+
+-- select e.ename, d.loc
+-- from
+-- 	emp as e inner join dept as d 
+--     on e.deptno = d.deptno
+-- where e.deptno = 10;
