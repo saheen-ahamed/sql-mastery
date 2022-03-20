@@ -274,8 +274,108 @@
 -- delete from shirts;
 
 -- drop table shirts;
-    
-    
+
+-- RUNNING SQL FROM FILE
+-- CREATE books TABLE 
+-- source book_data.sql;
+
+-- MYSQL STRING FUNCTIONS
+-- CONCATANATE
+-- select concat(author_fname," ",author_lname) as name
+-- from books;
+
+-- CONCAT_WS - CONCAT WITH SEPERATOR
+-- select concat_ws("-", title, author_fname, author_lname) from books;    
+
+-- SUBSTRING/SUBSTR
+-- select substring("hello world", 1, 4); 
+-- hell
+
+-- select substring("hello world", 7); 
+-- world
+
+-- select substring("hello world", -3);
+-- rld
+
+-- select substring(title,1, 10) from books;
+
+-- select concat(substr(title, 1, 10), "...") as short_title 
+-- from books;
+
+-- INLINE VIEW
+-- select concat(short_title, "...")
+-- from 
+-- 	(select substr(title, 1, 10) as short_title from books) as X;
+
+-- REPALCE
+-- select replace("hello world", "l", '7');
+-- select replace("hello world", "hell", ###);
+-- select replace("hellO world", "O", "0");
+-- select replace("cheese bread coffee milk", " ", " and "); 
+-- select replace(title, "e",  "3") from books; 
+  
+-- REVERSE
+-- select reverse('hello world');
+
+-- CHAR_LENGTH
+-- select char_length('hello world');
+
+-- select concat(author_lname, ' is ', char_length(author_lname), ' character long') as text
+-- from books;
+
+-- UPPER AND LOWER
+-- select upper('hello world');
+-- select lower('HEllO WOrld');
 
 
+-- HINT: beautify sql queries @ https://codebeautify.org/sqlformatter
 
+
+-- CHALLANGE
+-- select 
+--   upper(
+--     reverse(
+--       "Why does my cat looks at me with such hatred?"
+--     )
+--   );
+  
+-- select 
+--   replace(title, " ", "-->") 
+-- from 
+--   books;
+
+-- select 
+--   author_lname as forward, 
+--   reverse(author_lname) as backward 
+-- from 
+--   books;
+
+-- select 
+--   upper(
+--     concat(author_fname, " ", author_lname)
+--   ) as 'full name in caps' 
+-- from 
+--   books;
+
+-- select 
+--   concat(
+--     title, " was released in ", released_year
+--   ) as blurb 
+-- from 
+--   books;
+
+-- select 
+--   title, 
+--   char_length(title) as 'character count' 
+-- from 
+--   books;
+
+-- select 
+--   concat(
+--     substr(title, 1, 10), 
+--     "..."
+--   ) as short_title, 
+--   concat(author_fname, ",", author_lname) as author, 
+--   concat(stock_quantity, " in stock") as quantity 
+-- from 
+--   books;
