@@ -32,9 +32,9 @@
 -- CREATE A TABLE
 
 -- create table cats (
--- 	name varchar(50) not null,
---     breed varchar(20),
---     age int
+--	name varchar(50) not null,
+--	breed varchar(20),
+--	age int
 -- );
 
 -- GET THE DESCRIPTION ABOUT THE TABLE
@@ -284,7 +284,8 @@
 -- select concat(author_fname," ",author_lname) as name
 -- from books;
 
--- CONCAT_WS - CONCAT WITH SEPERATOR
+-- CONCAT_WS -- CONCAT WITH SEPERATOR
+
 -- select concat_ws("-", title, author_fname, author_lname) from books;    
 
 -- SUBSTRING/SUBSTR
@@ -303,11 +304,13 @@
 -- from books;
 
 -- INLINE VIEW
+
 -- select concat(short_title, "...")
 -- from 
 -- 	(select substr(title, 1, 10) as short_title from books) as X;
 
 -- REPALCE
+
 -- select replace("hello world", "l", '7');
 -- select replace("hello world", "hell", ###);
 -- select replace("hellO world", "O", "0");
@@ -315,23 +318,26 @@
 -- select replace(title, "e",  "3") from books; 
   
 -- REVERSE
+
 -- select reverse('hello world');
 
 -- CHAR_LENGTH
+
 -- select char_length('hello world');
 
 -- select concat(author_lname, ' is ', char_length(author_lname), ' character long') as text
 -- from books;
 
 -- UPPER AND LOWER
+
 -- select upper('hello world');
 -- select lower('HEllO WOrld');
 
 
 -- HINT: beautify sql queries @ https://codebeautify.org/sqlformatter
 
-
 -- CHALLANGE
+
 -- select 
 --   upper(
 --     reverse(
@@ -379,3 +385,89 @@
 --   concat(stock_quantity, " in stock") as quantity 
 -- from 
 --   books;
+
+-- REFINING SELECTIONS
+-- let's insert some new data into books table
+-- insert into books (title, author_fname, author_lname, released_year, stock_quantity, pages)
+-- values	
+-- 		('10% Happier', 'Dan', 'Harris', '2014', 29, 256),
+-- 		('fake_book', 'Freida', 'Harris', '2001', 287, 428),
+-- 		('Lincoln In The Bardo', 'George', 'Saunders', '2017', 1000, 367);
+
+-- DISTINCT - FILTER DUPLICATES
+-- select distinct * from books;
+
+-- select 
+-- 	distinct 
+-- 		concat(
+-- 			author_fname,
+-- 			" ", 
+--             author_lname
+-- 		) as 'Full name'
+-- from books; 
+
+ 
+-- ORDER BY -- SORTING
+
+-- select author_lname
+-- from books
+-- order by author_lname asc;
+-- you don't need to specify asc since, its default
+
+-- select title 
+-- from books 
+-- order by title desc;
+
+-- select title, pages, released_year
+-- from books
+-- order by 3 desc;
+-- you can specify the column number
+
+-- Note: sql query excecution order:  FROM --> WHERE --> SELECT --> ORDER BY
+    
+-- SHORT BY MULTIPLE COLUMNS
+
+-- select author_fname, author_lname
+-- from books 
+-- order by author_lname, author_fname;
+
+-- the order of column matters here
+
+-- LIMIT -- LIMIT THE QUERY RESULTS
+
+-- select title
+-- from books 
+-- limit 5;
+
+-- select title, released_year 
+-- from books
+-- order by 2 desc limit 5;
+
+-- SPECIFY STARING POINT AND HOW MANY ROWS TO LIMIT
+-- select title, released_year
+-- from books
+-- order by 2 desc limit 2,5;
+
+-- LIKE -- SEARCHING FOR PATTERN
+
+-- select title, concat(author_fname," ", author_lname) as 'name'
+-- from books 
+-- where author_fname like 'da%';
+
+-- select title
+-- from books
+-- where title like '%the%';
+
+-- %, _ are refered as wildcard characters
+
+-- select title, stock_quantity 
+-- from books 
+-- where stock_quantity like '____'; 
+
+-- "_" use to match the number of charactors 
+
+-- USE ESCAPE CHARACTER (\)
+
+-- select title 
+-- from books
+-- where title like '%\%%';
