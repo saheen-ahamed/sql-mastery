@@ -31,11 +31,10 @@
 
 -- CREATE A TABLE
 
--- create table cats (
---	name varchar(50) not null,
---	breed varchar(20),
---	age int
--- );
+-- create table cats(
+-- 	name varchar(50) not null, 
+-- 	breed varchar(20),	
+-- 	age int);
 
 -- GET THE DESCRIPTION ABOUT THE TABLE
 -- desc cats;
@@ -471,3 +470,74 @@
 -- select title 
 -- from books
 -- where title like '%\%%';
+
+-- CHALLANGE
+
+-- select title 
+-- from books 
+-- where title like '%stories%';
+
+-- select title, pages 
+-- from books 
+-- order by 2 desc limit 1;
+
+-- select concat(title, " - ", released_year) as summary
+-- from books
+-- order by released_year desc limit 3;
+
+-- select title, author_lname
+-- from books
+-- where author_lname like '% %';
+
+-- select title, released_year, stock_quantity
+-- from books 
+-- order by 3 limit 3;
+
+-- select title, author_lname
+-- from books 
+-- order by author_lname, title;
+
+-- select upper(concat('my favorite author is ', concat(author_fname, " ", author_lname))) as yell
+-- from books
+-- order by author_lname;
+
+-- AGGEGATE FUNCTIONS
+
+-- COUNT - COUNTING THE NUMBER OF ROWS
+
+-- select count(*)
+-- from books;
+ 
+-- select count(author_fname) 
+-- from books;
+
+-- select count(distinct author_fname)
+-- from books;
+
+-- select count(distinct author_fname, author_lname)
+-- from books;
+
+-- select count(*)
+-- from books
+-- where title like '%the%';  
+
+-- GROUP BY - SUMMARIZES OR AGGREGATES IDENTICAL DATA INTO SINGLE ROWS
+
+-- select title, author_lname from books limit 5;
+
+-- select title, author_lname
+-- from books
+-- group by author_lname;
+-- ???????
+
+-- select author_lname, count(*) 
+-- from books 
+-- group by author_lname;
+
+-- select author_fname, author_lname, count(*) as 'books written'
+-- from books
+-- group by author_fname, author_lname;
+
+-- select released_year, count(*) as 'books'
+-- from books
+-- group by 1 order by 2 desc;
