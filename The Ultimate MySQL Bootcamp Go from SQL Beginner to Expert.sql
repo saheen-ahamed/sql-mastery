@@ -541,3 +541,19 @@
 -- select released_year, count(*) as 'books'
 -- from books
 -- group by 1 order by 2 desc;
+
+-- MIN and MAX
+-- select min(released_year) from books;
+-- select max(released_year) from books;
+
+-- SUB QUERIRES/ IN LINE VIEW
+
+-- select title, pages from books
+-- where pages = (select max(pages) from books);
+ 
+-- when use sub queries, it take time greater than a single query
+
+-- better alternative!!!
+-- select title, pages 
+-- from books
+-- order by pages desc limit 1;
