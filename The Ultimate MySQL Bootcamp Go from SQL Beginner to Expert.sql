@@ -422,7 +422,7 @@
 -- order by 3 desc;
 -- you can specify the column number
 
--- Note: sql query excecution order:  FROM --> WHERE --> SELECT --> ORDER BY
+-- Note: sql query excecution order:  FROM --> WHERE --> SELECT --> ORDER BY/ GROUP BY
     
 -- SHORT BY MULTIPLE COLUMNS
 
@@ -557,3 +557,52 @@
 -- select title, pages 
 -- from books
 -- order by pages desc limit 1;
+
+-- MIN AND MAX WITH GROUP BY
+
+-- select author_fname, author_lname, min(released_year)
+-- from books
+-- group by 1, 2;  
+
+-- select author_fname, author_lname, max(pages) 
+-- from books
+-- group by 1, 2;
+
+-- SUM -- SUMMAZION
+-- select sum(stock_quantity) as 'total quantity' from books;
+
+-- SUM WITH GROUP BY
+
+-- select author_fname, author_lname, sum(stock_quantity) as 'total stocks'
+-- from books
+-- group by 1,2;
+
+-- AVG -- AVERAGE
+-- select floor(avg(pages)) from books;
+
+-- AVG WITH GROUP BY
+
+-- select released_year as 'year', ceil(avg(stock_quantity))
+-- from books 
+-- group by 1;
+
+-- CHALLANGE
+
+-- select count(*) as 'total books in the table' from books;
+
+-- select released_year, count(*) as 'books released' from books
+-- group by 1; 
+
+-- select sum(stock_quantity) as 'total books in stocks'
+-- from books;
+
+-- select author_fname, author_lname, round(avg(released_year)) 
+-- from books
+-- group by 1, 2;
+
+-- select concat(author_fname, " ", author_lname) from books 
+-- order by pages desc limit 1;
+
+-- select released_year as 'year', count(*) as '# books', avg(pages) as 'pages'
+-- from books
+-- group by 1 order by 1;
