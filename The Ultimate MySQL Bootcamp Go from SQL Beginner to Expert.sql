@@ -17,18 +17,6 @@
 
 -- GET DIVE INTO TABLES
 
--- DATATYPES
-
--- NUMERIC TYPES
--- int, smallint, tinyint, mediumint, bigint, decimal, numeric, float, double, bit
-
--- STRING TYPES
--- char, varchar, binary, varbinary, blob, tinyblob, mediumblob, longblob, text, tinytext, mediumtext, longtext, enum
-
--- DATE TYPES
--- date, datatime, timestamp, time, year
-
-
 -- CREATE A TABLE
 
 -- create table cats(
@@ -542,6 +530,10 @@
 -- from books
 -- group by 1 order by 2 desc;
 
+-- select author_lname, count(*) from books
+-- where author_lname = "eggers"
+-- group by 1;
+
 -- MIN and MAX
 -- select min(released_year) from books;
 -- select max(released_year) from books;
@@ -597,7 +589,7 @@
 -- from books;
 
 -- select author_fname, author_lname, round(avg(released_year)) 
--- from books
+-- from books 
 -- group by 1, 2;
 
 -- select concat(author_fname, " ", author_lname) from books 
@@ -606,3 +598,226 @@
 -- select released_year as 'year', count(*) as '# books', avg(pages) as 'pages'
 -- from books
 -- group by 1 order by 1;
+
+-- DATA TYPES
+
+	-- NUMERIC TYPES
+	-- int, smallint, tinyint, mediumint, bigint, decimal, numeric, float, double, bit
+
+	-- STRING TYPES
+	-- char, varchar, binary, varbinary, blob, tinyblob, mediumblob, longblob, text, tinytext, mediumtext, longtext, enum
+
+	-- DATE TYPES
+	-- date, datatime, timestamp, time, year
+
+-- CHAR VS VARCHAR
+	-- CHAR has a fixed length whereas, VARCHAR hasn't
+	-- CHAR is faster for fixed length text
+
+-- DECIMAL(5,2)
+	-- The decimal data type is a fixed-point type and calculation are exact
+	-- 5 > Number of digit,
+	-- 2 > Digital after decimal 
+
+-- FLOAT & DOUBLE
+	-- The float and double data types are floating point types and calculation are approximate
+    -- Store larger numbers using less space 'decimal can't
+    -- When working with these two data type, you have to worry about the precision
+
+-- DATE, TIME & DATETIME
+	-- DATE > (YYYY-MM-DD)
+    -- TIME > (HH:MM:SS)
+	-- DATETIME > (	YYYY-MM-DD HH:MM:SS)
+    
+-- CREATE DATE DATA
+-- create table people(
+-- 	name varchar(100),
+--     birth_date date,
+--     birth_time time, 
+--     birth_dt datetime);
+    
+-- insert into people (name, birth_date, birth_time, birth_dt) 
+-- values 
+-- 	("Saheen", "1996-07-11", "12:00:00", "1996-07-11 12:00:00"),
+-- 	("Suhail", "2001-04-17", "12:00:00", "2001-04-17 12:00:00");
+
+-- select * from people;
+-- desc people;
+
+-- CURDATE, CURTIME & NOW
+
+	-- select curdate();
+	-- select curtime();
+	-- select now();
+
+-- insert into people(name, birth_date, birth_time, birth_dt)
+-- values ('Jimmy', curdate(), curtime(), now());
+
+-- FORMATING DATES
+
+	-- select day();
+    -- select dayname();
+    -- select dayofweek();
+    -- select dayofyear();
+
+-- select name, day(birth_date) from people;
+-- select name, dayname(birth_date) from people; 
+-- select name, dayofyear(birth_date) from people;
+-- select name, monthname(birth_date) from people;
+
+-- select name, date_format(birth_dt, "born on %M %D %Y") as 'birth day' from people;
+
+-- DATE MATH
+
+-- select datediff(curdate(), "1996-07-11") as "age calculator";
+-- select date_add(curdate(), interval 3 quarter);
+-- select curdate() - interval 3 month;
+-- select current_time() + interval 5 hour + interval 30 minute;
+
+-- TIMESTAMPS
+	-- Timestamps data type is used for values that contain both date and time parts
+    -- Timestamps has a range of 1970-01-01 00:00:01 UTC to 2038-01-19 03:14:07 UTC
+    
+-- create table comments(
+-- 	content varchar(200),
+--     created_at timestamp default now());
+    
+-- insert into comments(content) values ("Wow learning sql is awesome");
+-- insert into comments(content) values ("SQL is powerfull than I thought");
+
+-- select * from comments order by created_at desc limit 1;
+
+-- ON UPDATE
+
+-- create table comments2(
+-- 	content varchar(200),
+--     created_at timestamp default now() on update current_timestamp);
+    
+-- insert into comments2(content) values ("Wow learning sql is awesome");
+-- insert into comments2(content) values ("SQL is powerfull than I thought");
+
+-- update comments2
+-- set content = "Learning SQL is bit harder"
+-- where content = "Wow learning sql is awesome";
+
+-- CHALLANGE
+
+-- What is the good use for CHAR
+-- For fixed length characters char data type is faster, it hold less number of bytes comparared to varchar
+
+-- create table inventory(
+-- 	item_name varchar(20),
+--     price decimal(6,2),
+--     quantity int);
+
+-- What is the different between datetime and timestamps
+	-- Range > datetime support wide range of dates
+    -- Size > timestams takes less amount of memory than datetime
+
+-- select curtime();
+
+-- select curdate();
+
+-- select dayofweek(curdate
+
+-- select date_format(now(), "%m/%d/%Y");
+
+-- select date_format(now(), "%M %D at %h:%m");
+
+-- create table tweets(
+-- 	content varchar(200),
+--     Username varchar(20),
+--     created_at time default now() on update now());
+
+-- LOGICAL OPERATORS
+
+-- NOT EQUAL (!=)
+
+-- select * from books where released_year != 2007;
+
+-- NOT LIKE
+
+-- select * from books where title not like '%the%'; 
+-- select * from books where stock_quantity not like '__';
+
+-- > , < , >= and <=
+
+-- select * from books where released_year >= 2004;
+-- select * from books where stock_quantity < 100;
+-- select 'a' < 'b';
+-- select 'A' >= 'a';
+
+-- LOGICAL AND (&&)
+
+-- select title, released_year 
+-- from books 
+-- where 
+-- 	author_lname = 'eggers' &&
+--     author_fname = 'dave' &&
+--     released_year > 2010;
+
+-- select * from books 
+-- where 
+-- 	author_lname = 'eggers' and 
+-- 	released_year > 2010 and
+--     title like '%novel%';
+
+-- LOGICAL OR (||)
+
+-- select * from books
+-- where 
+-- 	author_lname = 'eggers' or
+--     released_year > 2010 or 
+--     stock_quantity > 100;
+
+-- BETWEEN
+	
+    -- !! A way of doing BETWEEN with only and operator !!
+	-- select * from books 
+	-- where 
+	-- 	stock_quantity > 100 and 
+	--     stock_quantity < 500;
+    
+-- select * from books
+-- where stock_quantity between 100 and 500; 
+    
+-- Note: convert the dates to datetime type using cast(), when working with between and dates
+
+-- select name, birth_dt as 'birth day' from people
+-- where
+-- 	birth_dt 
+-- 		between 
+-- 			cast('1990-01-01' as datetime) and 
+-- 			cast('1999-12-31' as datetime);
+ 
+-- IN
+
+	-- select title, author_lname from books
+	-- where
+	-- 	author_lname = 'carver' or
+	--     author_lname = 'lahri' or
+	--     author_lname = 'smith';
+    
+-- select title, author_lname from books
+-- where author_lname in ('carver', 'lahri', 'smith');
+
+-- select title, released_year from books 
+-- where released_year in (2017, 2001);
+
+-- select title, released_year from books 
+-- where released_year not in (2017, 2001);
+
+-- select title, released_year from books 
+-- where 
+-- 	released_year >= 2000 and
+--     released_year not in 
+-- 		(2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014, 2016)
+-- order by 2;
+
+-- MODULO (NOT A LOGICAL OPERATOR)
+
+-- select title, released_year from books 
+-- where 
+-- 	released_year >= 2000 and
+--     released_year % 2 != 0
+-- order by 2;
