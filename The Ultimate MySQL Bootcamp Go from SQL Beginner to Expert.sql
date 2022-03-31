@@ -821,3 +821,60 @@
 -- 	released_year >= 2000 and
 --     released_year % 2 != 0
 -- order by 2;
+
+-- CASE -- CONDITIONAL SELECT
+
+-- select title, released_year,
+-- 	case
+-- 		when released_year >= 2000 then "Modern lit"
+-- 		else "21th Century lit"
+-- 		end as "genre"
+-- from books;
+
+-- select title, stock_quantity, 
+-- 	case
+-- 		when stock_quantity between 0 and 50 then '*'
+--         when stock_quantity between 51 and 100 then '**'
+--         else '***'
+-- 	end as stock
+-- from books;
+
+-- CHALLANGE
+
+-- select 10 != 10;
+-- select 15 > 14 && 99 - 4 <= 94;
+-- select 1 in (5,3) or 9 between 8 and 10;
+
+-- select * from books
+-- where released_year < 1980;
+
+-- select * from books
+-- where 
+-- 	author_lname = 'eggers' or 
+--     author_lname = 'chabon';
+
+-- select * from books
+-- where 
+-- 	author_lname = 'lahri' and 
+--     released_year >= 2000;
+    
+-- select * from books
+-- where
+-- 	pages between 100 and 200;
+    
+-- select * from books
+-- where
+-- 	author_lname like 'C%' or 
+--     author_lname like 'S%';
+
+-- select title, author_lname, 
+-- 	case
+-- 		when title like '%stories%' then 'Short stories'
+--         when title like 'Just Kids' or title like 'A Heartbreaking Work%' then 'Memoir'
+--         else 'Novel'
+-- 	end as 'type'
+-- from books;
+
+-- select author_lname, concat(count(*), " books") as 'count' 
+-- from books 
+-- group by author_lname;
