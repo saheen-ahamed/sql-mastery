@@ -171,12 +171,18 @@
 -- 	breed = "persian" or age = 4
 
 -- CHALLANGE
+
 -- select id, age
 -- from cats
 -- where 
 -- 	id = age;
 
 -- UPDATE 
+
+-- update table name
+-- set column = "value"
+-- where condition
+
 -- update cats 
 -- set name="Dumbledore"
 -- where name = "Dubledore";
@@ -878,3 +884,224 @@
 -- select author_lname, concat(count(*), " books") as 'count' 
 -- from books 
 -- group by author_lname;
+
+-- RELATIONSHIPS AND JOINS
+
+-- ONE TO MANY RELATIONSHIP
+
+-- PRIMARY KEYS AND FOREING KEY 
+
+-- CREATE TABLE customers(
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     first_name VARCHAR(100),
+--     last_name VARCHAR(100),
+--     email VARCHAR(100)
+-- );
+
+-- CREATE TABLE orders(
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     order_date DATE,
+--     amount DECIMAL(8,2),
+--     customer_id INT,
+--     FOREIGN KEY(customer_id) REFERENCES customers(id)
+-- );
+
+-- Inserting some customers and orders
+
+-- INSERT INTO customers (first_name, last_name, email) 
+-- VALUES ('Boy', 'George', 'george@gmail.com'),
+--        ('George', 'Michael', 'gm@gmail.com'),
+--        ('David', 'Bowie', 'david@gmail.com'),
+--        ('Blue', 'Steele', 'blue@gmail.com'),
+--        ('Bette', 'Davis', 'bette@aol.com');
+       
+-- INSERT INTO orders (order_date, amount, customer_id)
+-- VALUES ('2016/02/10', 99.99, 1),
+--        ('2017/11/11', 35.50, 1),
+--        ('2014/12/12', 800.67, 2),
+--        ('2015/01/03', 12.50, 2),
+--        ('1999/04/11', 450.25, 5);
+
+-- This INSERT fails because of our fk constraint.  No user with id: 98
+
+-- INSERT INTO orders (order_date, amount, customer_id)
+-- VALUES ('2016/06/06', 33.67, 98);
+
+-- JOINS
+
+-- CROSS JOINS / CARTISIAN JOIN
+
+-- select * from customers, orders
+-- where
+
+-- INNER JOIN / EQUI JOIN
+-- Select all records from left and right table where the join condition met
+
+-- IMPLICIT INNER JOIN
+
+-- select first_name, last_name, order_date, amount 
+-- from 
+-- 	customers c, orders o
+-- where c.id = o.customer_id;
+
+-- EXPLICIT INNER JOIN (INNER KEYWORD IS OPTIONAL)
+
+-- select first_name, last_name, order_date, amount
+-- from 
+-- 	customers join orders 
+--     on customers.id = orders.customer_id;
+
+-- AGGREGATE WITH INNER JOIN
+
+-- list customers had ordered with total amount they spent
+
+-- select 
+-- 	first_name, 
+-- 	last_name, 
+--     sum(amount) as total_spent
+-- from 
+-- 	customers join orders 
+--     on customers.id = orders.customer_id
+-- group by orders.customer_id
+-- order by 3 desc;
+
+-- Note: the orders of tables matters
+
+-- LEFT JOIN 
+-- Select everything from left table along with any matching records in right table
+
+-- select c.id, first_name, last_name, order_date, amount
+-- from customers c left join orders o
+-- 	on c.id = o.customer_id; 
+
+-- AGGREGATE WITH LEFT JOIN
+
+-- list all the customers with order details
+
+-- select 
+-- 	c.id,
+-- 	first_name, 
+--     last_name, 
+--     ifnull(sum(amount), 0)
+-- from customers c left join orders o
+-- 	on c.id = o.customer_id
+-- group by c.id;
+
+-- RIGHT JOIN
+-- Select everything from right table along with any matching records in left table
+
+-- select 
+-- 	o.id, 
+--     order_date,
+--     first_name, 
+--     last_name,
+--     email
+-- from 
+-- 	customers c right join orders o
+-- 	on c.id = o.customer_id
+-- order by 2 desc;
+
+-- AGGREGATE WITH RIGHT JOIN
+
+-- list the customers had orders 
+
+-- select 
+-- 	first_name,
+--     last_name,
+--     email,
+--     sum(amount)
+-- from 
+-- 	customers c right join orders o
+--     on c.id = o.customer_id
+-- group by c.id
+-- order by 4 desc;
+
+-- ON DELETE CASCADE -- DELETING TABLE/DATA WITH HAS RELATIONSHIPS
+
+-- WHEN CREATING A TABLE WITH FORIENG KEY SPECIFY ON DELETE CASCADE
+
+-- CREATE TABLE orders(
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     order_date DATE,
+--     amount DECIMAL(8,2),
+--     customer_id INT,
+--     FOREIGN KEY(customer_id) 
+-- 		REFERENCES customers(id)
+--         ON DELETE CASCADE
+-- );
+
+-- RIGHT JOIN is a flip of LEFT JOIN
+
+-- select * from 
+-- customers left join orders
+-- on customers.id = orders.customer_id;
+
+-- select * from 
+-- orders right join customers
+-- on customers.id = orders.customer_id;
+
+-- CHALLANGE
+
+-- create table students(
+-- 	id int auto_increment primary key,
+--     first_name varchar(50) not null);
+
+-- create table papers(
+-- 	title varchar(50) not null,
+--     grade int,
+--     student_id int, 
+-- 	foreign key(student_id) 
+-- 		references students(id) 
+--         on delete cascade); 
+
+-- INSERT INTO students (first_name) 
+-- VALUES 
+-- 	('Caleb'), 
+-- 	('Samantha'), 
+-- 	('Raj'), 
+-- 	('Carlos'), 
+-- 	('Lisa');
+
+-- INSERT INTO papers (student_id, title, grade ) 
+-- 	VALUES
+-- 	(1, 'My First Book Report', 60),
+-- 	(1, 'My Second Book Report', 75),
+-- 	(2, 'Russian Lit Through The Ages', 94),
+-- 	(2, 'De Montaigne and The Art of The Essay', 98),
+-- 	(4, 'Borges and Magical Realism', 89);
+
+-- select first_name, title, grade 
+-- from 
+-- 	students right join papers
+--     on students.id = papers.student_id
+-- order by 3 desc;
+
+-- select 
+-- 	first_name, 
+-- 	ifnull(title, "Missing"), 
+--     ifnull(grade, 0)
+-- from 
+-- 	students left join papers
+--     on students.id = papers.student_id;
+
+-- select 
+-- 	first_name, 
+--     ifnull(avg(grade), 0) as 'average'
+-- from 
+-- 	students left join papers	
+-- 	on students.id = papers.student_id
+-- group by 1
+-- order by 2 desc;
+
+-- select 
+-- 	first_name, 
+--     ifnull(avg(grade), 0) as 'average',
+--     case
+-- 		when avg(grade) >= 75 then 'PASSING'
+--         else 'FAILINIG'
+--     end as passing_status
+-- from 
+-- 	students left join papers	
+-- 	on students.id = papers.student_id
+-- group by 1
+-- order by 2 desc;
