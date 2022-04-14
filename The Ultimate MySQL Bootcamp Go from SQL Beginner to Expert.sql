@@ -931,8 +931,7 @@
 
 -- CROSS JOINS / CARTISIAN JOIN
 
--- select * from customers, orders
--- where
+-- select * from customers, orders;
 
 -- INNER JOIN / EQUI JOIN
 -- Select all records from left and right table where the join condition met
@@ -1101,7 +1100,79 @@
 --         else 'FAILINIG'
 --     end as passing_status
 -- from 
--- 	students left join papers	
+-- 	students left join papers
 -- 	on students.id = papers.student_id
 -- group by 1
 -- order by 2 desc;
+
+-- MANY TO MANY RELATIONSHIP
+
+-- CHALLANGE 1
+
+-- select title, rating
+-- from 
+-- 	series inner join reviews
+-- 	on reviews.series_id = series.id
+-- limit 15;
+
+-- CHALLANGE 2
+
+-- select title, avg(rating) as "avg_rating" 
+-- from 
+-- 	series inner join reviews
+--     on series.id = reviews.series_id
+-- group by 1
+-- order by 2;
+
+-- CHALLANGE 3
+
+-- select first_name, last_name, rating
+-- from
+-- 	reviewers join reviews
+--     on reviewers.id = reviews.reviewer_id;
+
+-- CHALLANGE 4
+
+-- select title as "unreviewed_series" 
+-- from 
+-- 	series left join reviews
+-- 	on series.id = reviews.series_id
+-- where reviews.rating is null;
+
+-- CHALLANGE 5 
+
+-- select genre, round(avg(rating),2) as "avg_rating"
+-- from 
+-- 	series join reviews
+--     on series.id = reviews.series_id
+-- group by 1;
+
+-- CHALLANGE 6 
+
+-- select 
+-- 	first_name,
+--     last_name,
+--     ifnull(count(rating), 0) as 'COUNT',
+--     ifnull(min(rating), 0) as 'MIN',
+--     ifnull(max(rating), 0) as 'MAX',
+--     ifnull(avg(rating), 0) as 'AVG',
+--     if(reviews.reviewer_id is not null, 'ACTIVE', 'INACTIVE') as 'STATUS'
+-- from 
+-- 	reviewers left join reviews
+--     on reviewers.id = reviews.reviewer_id
+-- group by reviewers.id;
+
+-- IF statement can be used as the alternative to CASE statement if two only have 2 condition
+
+-- CHALLANGE 7 - JOIN 3 TABLES
+
+-- select 
+-- 	title, 
+-- 	rating, 
+--     concat(first_name, " " , last_name) as reviewer
+-- from reviewers
+-- 	inner join reviews
+--     on reviews.reviewer_id = reviewers.id
+--     inner join series
+--     on series.id = reviews.series_id
+-- order by 1;
