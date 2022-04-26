@@ -1176,3 +1176,28 @@
 --     inner join series
 --     on series.id = reviews.series_id
 -- order by 1;
+
+-- INSTAGRAM DATA CLONE
+-- SCHEMA DESIGN
+
+-- create database ig_clone;
+
+-- CREATE A TABLE FOR USERS
+
+-- create table users(
+-- 	id int auto_increment primary key,
+--     username varchar(100) unique not null,
+-- 	created_at timestamp default now());
+
+-- CREATE A TABLE FOR PHOTOS
+
+-- create table photos(
+-- 	id int auto_increment primary key,
+--     image_url varchar(255) not null,
+--     user_id int not null,
+--     created_at timestamp default now(),
+--     foreign key (user_id) references users(id) on delete cascade);
+
+desc photos;
+
+    
