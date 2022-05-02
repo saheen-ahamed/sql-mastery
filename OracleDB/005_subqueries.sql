@@ -1,14 +1,14 @@
 -- create table department(
 --     deptno number primary key,
-    -- dname varchar(40) not null,
+--     dname varchar(40) not null,
 --     location varchar2(40) not null);
 
 -- create table employee(
 --     eno number primary key,
 --     ename varchar2(100) not null,
 --     deptno number not null,
---     salary number(4,2),
---     commision number(4,2),
+--     salary number,
+--     commision number,
 --     constraint emp_dept_fk foreign key (deptno) references department(deptno)
 -- );
 
@@ -114,3 +114,75 @@
 --     where
 --         d.deptno = e.deptno and
 --         d.deptno = 3);
+
+-- NOT IN VS NOT EXISTS
+
+-- select *
+-- from employee e
+-- where
+--     e.deptno not in
+--     (select deptno
+--     from department d
+--     where
+--         d.dname = 'HR' and
+--         e.deptno = d.deptno);
+
+-- select *
+-- from employee e
+-- where not exists
+--     (select deptno
+--     from department d
+--     where
+--         d.dname = 'HR' and
+--         e.deptno = d.deptno);
+
+-- select *
+-- from employee e
+-- where
+--     e.deptno not in (2,3);
+
+-- SCALAR SUBQUERIES ***
+
+-- Scalar subqueries return one column and at most one row. You can replace a column with a scalar subquery in most cases.
+-- For example, to return a count of the number of employees matching each department, you could do the following:
+
+-- select
+--     deptno,
+--     dname,
+--     (select count(*)
+--     from employee e
+--     where e.deptno = d.deptno
+--     group by e.deptno) number_of_employees
+-- from department d
+-- order by 1;
+
+-- COMMON TABLE EXPRESSIONS
+
+-- Common table expressions (CTEs) enable you to name subqueries.
+-- You then refer to these like normal tables elsewhere in your query.
+-- This can make your SQL easier to write and understand later
+
+-- with employee_count as (
+--     select deptno, count(*) emp_count
+--     from employee
+--     group by deptno)
+
+-- select d.dname, d.location, ec.emp_count
+-- from
+--     department d join employee_count ec
+--     on d.deptno = ec.deptno;
+
+-- Because you access CTEs in the same way as a regular table, you can use it many times in your query.
+-- This can help if you want to use this subquery many times
+
+-- with employee_count as (
+--     select deptno, count(*) emp_count
+--     from employee
+--     group by deptno)
+
+-- select d.dname, d.location, ec.emp_count
+-- from
+--     department d join employee_count ec
+--     on d.deptno = ec.deptno
+-- where
+--     ec.deptno in (1,2);
