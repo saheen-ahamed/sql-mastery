@@ -186,3 +186,10 @@
 --     on d.deptno = ec.deptno
 -- where
 --     ec.deptno in (1,2);
+
+-- LITERATE SQL
+
+-- The idea is to write code that makes sense if you read it like a book: from start to finish. (Clean coding)
+-- But subqueries usually break this human readable flow.
+-- We can use CTEs to order the subqueries to match, it makes easier to figure out what a SQL statement does when you look into it later.
+-- Another big advantages of CTES (With clause) is it makes your SQL easier to test and debug.
