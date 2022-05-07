@@ -264,6 +264,11 @@
 -- end;
 -- /
 
+-- CURRENT OF
+
+-- Current of <cursor_name> is a pointer for the current record (row) in the table
+-- Can be used within the loop of records
+
 -- declare
 --     cursor sal_cursor is
 --         select empid, name, salary
@@ -277,5 +282,63 @@
 --             where current of sal_cursor;
 --         end if;
 --     end loop;
+-- end;
+-- /
+
+-- EXCEPTION HANDLING
+
+-- Exception is a identifier which is raised during excecution either implicitly or explicitly
+
+-- Two types of exceptions
+    -- Predifined -> implicit
+    -- User defined -> explicit
+
+-- PREDEFINED EXCEPTIONS
+
+-- declare
+--     ename employee.name%type;
+--     esal employee.salary%type;
+-- begin
+--     select name, salary into ename, esal
+--     from employee
+--     where empid = 4;
+
+--     dbms_output.put_line(ename || ' earns ' || esal);
+
+--     exception
+--         when no_data_found then
+--             dbms_output.put_line('No records found');
+--         when too_many_rows then
+--             dbms_output.put_line('More than 1 rows found');
+--         when others then
+--             dbms_output.put_line('Some other errors found');
+-- end;
+-- /
+
+-- USER DEFINED EXCEPTIONS
+
+-- declare
+--     ename employee.name%type;
+--     esal employee.salary%type;
+--     invalid_dept exception;
+-- begin
+--     update employee
+--     set salary = salary + 3000
+--     where department = 'Finance';
+
+--     if SQL%notFound then
+--         raise invalid_dept;
+--     end if;
+--     commit;
+
+--     exception
+--         when no_data_found then
+--             dbms_output.put_line('No records found');
+--         when too_many_rows then
+--             dbms_output.put_line('More than 1 rows found');
+--         when invalid_dept then
+--             dbms_output.put_line('No such department exist in the records);
+--         when others then
+--             dbms_output.put_line('Some other errors found');
 -- end;
 -- /
