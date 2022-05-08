@@ -1,3 +1,16 @@
+-- PREREQUISITE
+
+-- create table employee(
+--     empid int primary key,
+--     name varchar2(100) not null,
+--     salary int default 2000,
+--     department varchar2(100));
+
+-- insert into employee (empid, name, department, salary) values (1, 'Saheen', 'Analytics', 5000);
+-- insert into employee (empid, name, department) values (2, 'Jia', 'Accounting');
+-- insert into employee (empid, name, department) values (3, 'Kylie', 'HR');
+-- commit;
+
 -- PL/SQL
 
 -- PL/SQL is the oracle's procedural extension of SQL
@@ -22,17 +35,6 @@
 -- STATIC SQL
 
 -- With PL/SQL it is easy to integrate SQL statements.
-
--- create table employee(
---     empid int primary key,
---     name varchar2(100) not null,
---     salary int default 2000,
---     department varchar2(100));
-
--- insert into employee (empid, name, department, salary) values (1, 'Saheen', 'Analytics', 5000);
--- insert into employee (empid, name, department) values (2, 'Jia', 'Accounting');
--- insert into employee (empid, name, department) values (3, 'Kylie', 'HR');
--- commit;
 
 -- declare
 --     ename varchar2(100);
@@ -435,3 +437,124 @@
 --     get_tax_amount(salary) tax_payable,
 --     salary - get_tax_amount(salary) gross_salary
 -- from employee;
+
+-- PACKAGES
+
+-- Group of logically divided subprograms
+-- Divided into two part, package specification and body
+-- Public package construct are declared in specification
+-- Private package construct are declared in package body
+-- Packages itself cannot be invoked
+-- On the first call of a package block, the whole package will loaded in memory
+
+-- Create package specification
+
+-- create or replace package manage_employee is
+--     procedure add_emp(empno int, ename varchar2, esal int, dept varchar2);
+--     procedure edit_emp(empno int, ename varchar2, esal int, dept varchar2);
+-- end manage_employee;
+-- /
+
+-- Create package specification
+
+-- create or replace package body manage_employee is
+--     procedure add_emp (
+--         empno int, ename varchar2, esal int, dept varchar2) is
+--     begin
+--         insert into employee values (empno, ename, esal, dept);
+--         dbms_output.put_line('1 row inserted into employee table');
+--     end add_emp;
+
+--     procedure edit_emp (
+--         empno int, ename varchar2, esal int, dept varchar2) is
+--     begin
+--         update employee
+--         set
+--             name = ename, department = dept, salary = esal
+--         where empid = empno;
+--         dbms_output.put_line('1 row updated with employee id ' || empno);
+--     end edit_emp;
+-- end;
+-- /
+
+-- execute manage_employee.add_emp(4, 'Karlie', 8000, 'Finance');
+-- execute manage_employee.edit_emp(4, 'Nikole', 6000, 'Finance');
+
+-- ADVANCED PACKAGES
+
+-- CREATE BODYLESS PACKAGES
+
+-- create or replace package global_constants is
+--     mile_to_km constant number := 1.6093;
+--     km_to_mile constant number := 0.6214;
+-- end;
+-- /
+
+-- execute dbms_output.put_line(20 * global_constants.mile_to_km);
+
+-- OVERLOADING THE PROCEDURES
+
+-- create or replace package manage_employee is
+--     procedure add_emp(eno int, ename varchar2);
+--     procedure add_emp(eno int, ename varchar2, esal int);
+--     procedure add_emp(eno int, ename varchar2, esal int, dept varchar2);
+-- end manage_employee;
+-- /
+
+-- create or replace package body manage_employee is
+--     procedure add_emp(eno int, ename varchar2) is
+--     begin
+--         insert into employee values (eno, ename, 2000, 'Finance');
+--     end add_emp;
+
+--     procedure add_emp(eno int, ename varchar2, esal int) is
+--     begin
+--         insert into employee values (eno, ename, esal, 'Finance');
+--     end add_emp;
+
+--     procedure add_emp(eno int, ename varchar2, esal int, dept varchar2) is
+--     begin
+--         insert into employee values (eno, ename, esal, dept);
+--     end add_emp;
+-- end;
+-- /
+
+-- execute manage_employee.add_emp(5, 'Rocky');
+-- execute manage_employee.add_emp(6, 'Aadheera', 6000);
+-- execute manage_employee.add_emp(7, 'Leela', 7000, 'HR');
+
+-- FORWARD DECLARATION
+
+-- create or replace package manage_employee is
+--     procedure add_emp(empno int, ename varchar2, esal int, dept varchar2);
+--     procedure edit_emp(empno int, ename varchar2, esal int, dept varchar2);
+-- end manage_employee;
+-- /
+
+-- create or replace package body manage_employee is
+
+--     procedure get_emp(eno in out int);
+
+--     procedure add_emp(empno int, ename varchar2, esal int, dept varchar2) is
+--     begin
+--         insert into employee values (empno, ename, esal, dept);
+--     end add_emp;
+
+--     procedure edit_emp(empno int, ename varchar2, esal int, dept varchar2) is
+--     begin
+--         if get_emp(empno) is null then
+--             dbms_output.put_line('Employee with id ' || empno || ' not found');
+--         else
+--             update employee
+--             set name = ename, salary = esal, department = dept
+--             where empid = empno;
+--         end if;
+--     end edit_emp;
+
+--     procedure get_emp(eno in out int) is
+--     begin
+--         select empid into eno from employee where empid = eno;
+--     end get_emp;
+
+-- end;
+-- /
