@@ -342,3 +342,96 @@
 --             dbms_output.put_line('Some other errors found');
 -- end;
 -- /
+
+-- PROCEDURES
+
+-- A sub program (or object) used to perform repeated excecution
+-- Values can be supplied through parameters
+-- Formal parameter is passed when we define the procedure and the actural parameter is passed when we call the procedure
+
+-- Modes of passing parameter
+    -- IN paramter -> formal paremeter pass value to the actual parameter
+    -- OUT parameter -> actual paramter pass value to the formal parameter
+    -- IN OUT parameter -> parameter has dual effect
+
+-- Create procedure
+
+-- create or replace procedure test_procedure is
+-- begin
+--     dbms_output.put_line('this is the testing procedure');
+-- end;
+-- /
+
+-- execute test_procedure;
+
+-- Parameterized procedure - IN mode
+
+-- create or replace procedure add_employee(
+--     eno in employee.empid%type,
+--     ename in employee.name%type,
+--     esal in employee.salary%type,
+--     dept in employee.department%type) is
+-- begin
+--     insert into employee values (eno, ename, esal, dept);
+--     dbms_output.put_line('1 row inserted.');
+-- end;
+-- /
+
+-- execute add_employee(4, 'Kira', 6000, 'Finance');
+
+-- Prameterized procedure - OUT mode
+
+-- create or replace procedure get_salary(
+--     eno in employee.empid%type,
+--     esal out employee.salary%type) is
+-- begin
+--     select salary into esal from employee
+--     where empid = eno;
+-- end;
+-- /
+
+-- declare
+--     salary int;
+-- begin
+--     get_salary(4, salary);
+--     dbms_output.put_line(salary);
+-- end;
+-- /
+
+-- Parameterized procedure - IN OUT mode
+
+-- create or replace procedure format_name (name in out varchar2) is
+-- begin
+--     name := initcap(name);
+-- end;
+-- /
+
+-- declare
+--     name varchar2(100);
+-- begin
+--     name := 'saheen ahamed';
+--     format_name(name);
+--     dbms_output.put_line(name);
+-- end;
+-- /
+
+-- FUNCTIONS
+
+-- A PL-SQL block that returns a value
+-- Provide reusability
+-- Invoked by select or where clause
+
+-- create or replace function get_tax_amount(salary number) return number is
+-- begin
+--     return (salary * 10/100);
+-- end;
+-- /
+
+-- select
+--     empid,
+--     name,
+--     department,
+--     salary,
+--     get_tax_amount(salary) tax_payable,
+--     salary - get_tax_amount(salary) gross_salary
+-- from employee;
