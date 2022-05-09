@@ -662,3 +662,52 @@
 -- /
 
 -- insert into empdata values(12, 'Lulu', 'Analytics', 7999);
+
+-- DDL TRIGGERS
+
+-- create table toys(
+--     toyid number,
+--     tname varchar2(100),
+--     tclass varchar2(100));
+
+-- create or replace trigger toyid_generator
+-- before insert or update on toys
+-- for each row
+-- begin
+--     if inserting and :new.toyid is null then
+--         :new.toyid := to_number(sys_guid(),'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+--     end if;
+-- end;
+-- /
+
+-- insert into toys (tname, tclass) values ('Super gun', 'Guns');
+-- insert into toys (tname, tclass) values ('Light gun', 'Guns');
+-- insert into toys (tname, tclass) values ('Lambogini', 'Cars');
+
+-- create or replace trigger drop_database
+-- before drop on database
+-- begin
+--     raise_application_error(-20134, 'You cannot drop any table or database');
+-- end;
+-- /
+
+-- LOGIN and LOGOFF TRIGGERS
+
+-- create table login_details(
+--     username varchar2(10),
+--     logintime date,
+--     action varchar2(10));
+
+-- create or replace trigger login_trigger
+-- after logon on schema
+-- begin
+--     insert into login_details values (user, sysdate, 'login');
+-- end;
+-- /
+
+-- create or replace trigger logoff_trigger
+-- before logoff on schema
+-- begin
+--     insert into login_details values (user, sysdate, 'logout');
+-- end;
+-- /
