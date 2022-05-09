@@ -142,7 +142,9 @@
 
 -- DESCRIBE TABLE/ DATA DICTIONARY/ META DATA
 
--- describe employees
+-- describe employees;
+
+-- desc employees;
 
 -- select table_name, tablespace_name, status
 -- from user_tables
