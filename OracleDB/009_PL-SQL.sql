@@ -9,6 +9,17 @@
 -- insert into employee (empid, name, department, salary) values (1, 'Saheen', 'Analytics', 5000);
 -- insert into employee (empid, name, department) values (2, 'Jia', 'Accounting');
 -- insert into employee (empid, name, department) values (3, 'Kylie', 'HR');
+
+-- create table department(
+--     did int primary key,
+--     dname varchar2(100) not null,
+--     location varchar2(100));
+
+-- insert into department values (10, 'Analytics', 'New York');
+-- insert into department values (11, 'HR', 'New Jersey');
+-- insert into department values (12, 'Accounting', 'San Francisco');
+-- insert into department values (13, 'Finance', 'Chicago');
+
 -- commit;
 
 -- PL/SQL
@@ -455,7 +466,7 @@
 -- end manage_employee;
 -- /
 
--- Create package specification
+-- Create package body
 
 -- create or replace package body manage_employee is
 --     procedure add_emp (
@@ -558,3 +569,96 @@
 
 -- end;
 -- /
+
+-- TRIGGERS
+
+-- Is a named PL-SQL block
+-- Is planned for perticular event and timing
+-- Is executed implicitly on event
+-- Is designed to perform related action or to centralize global actions
+-- Excessive use of triggers may result complex indepenencies
+
+-- Two types
+    -- Application triggers (related with UI operation such as forms)
+    -- Database triggers
+-- Database triggers classified into,
+    -- DML triggers
+    -- Instead of triggers
+    -- DDL triggers
+
+-- DML TRIGGERS
+
+-- create or replace trigger emp_insert
+-- after insert on employee
+-- begin
+--     dbms_output.put_line('1 row inserted into employee table');
+-- end;
+-- /
+
+-- insert into employee (empid, name, salary, department) values (10, 'Lily', 10000, 'HR');
+
+-- create or replace trigger emp_restricted_insert
+-- before insert on employee
+-- begin
+--     if to_char(sysdate, 'HH24:MI') not between '09:00' and '18:00' then
+--         raise_application_error(-20123, 'You can only add employees between 09:00 to 18:00');
+--     end if;
+-- end;
+-- /
+
+-- insert into employee (empid, name, salary, department) values (11, 'Freya', 9000, 'Accounting');
+
+-- create or replace trigger emp_restricted_dml
+-- before insert or update or delete on employee
+-- begin
+--     if to_char(sysdate, 'HH24:MI') not between '09:00' and '18:00' then
+--         raise_application_error(-20124, 'You can only manipulate employees between 09:00 to 18:00');
+--     end if;
+-- end;
+-- /
+
+-- ROW WISE TRIGGER
+
+-- create or replace trigger salary_update_check
+-- before update of salary on employee
+-- for each row
+-- begin
+--     if :new.salary < :old.salary then
+--         raise_application_error(-20125, 'Salary update cannot be lesser than old salary');
+--     end if;
+-- end;
+-- /
+
+-- update employee
+-- set salary = 4000
+-- where empid = 1;
+
+-- INSTEAD OF TRIGGERS FOR VIEWS
+
+-- create or replace view empdata as (
+--     select
+--         empid, name, department, salary
+--     from
+--         employee e join department d
+--         on e.department = d.dname);
+
+-- create table empnew(
+--     empid int primary key,
+--     ename varchar2(100) not null,
+--     dept int,
+--     salary int);
+
+-- create or replace trigger emp_dept_insert
+-- instead of insert on empdata
+-- for each row
+-- declare
+--     dno int;
+-- begin
+--     select did into dno from department where lower(dname) = lower(:new.department);
+--     if inserting then
+--         insert into empnew values(:new.empid, :new.name, dno, :new.salary);
+--     end if;
+-- end;
+-- /
+
+-- insert into empdata values(12, 'Lulu', 'Analytics', 7999);
