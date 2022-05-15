@@ -89,3 +89,28 @@
 -- from
 --     toys full join bricks
 --     on toy_id = brick_id;
+
+-- SELF JOIN
+
+-- create table tbl_emp (
+--     eno int primary key,
+--     ename varchar2(100),
+--     mgrid int);
+
+-- insert into tbl_emp values(101, 'A', null);
+-- insert into tbl_emp values(103, 'B', null);
+-- insert into tbl_emp values(104, 'C', null);
+-- insert into tbl_emp values(105, 'D', 101);
+-- insert into tbl_emp values(106, 'E', 103);
+-- insert into tbl_emp values(107, 'F', 101);
+-- insert into tbl_emp values(108, 'G', 104);
+-- insert into tbl_emp values(109, 'H', 101);
+
+-- commit;
+
+-- find the employees for each manager
+
+-- select manager.ename, worker.ename
+-- from
+--     tbl_emp worker join tbl_emp manager
+--     on worker.mgrid = manager.eno;
