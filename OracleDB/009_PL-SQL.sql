@@ -258,7 +258,6 @@
 -- end;
 -- /
 
-
 -- CURSOR FOR UPDATE (FOR UPDATE OF)
 
 -- This function lock the update for a perticular column in the table
@@ -463,7 +462,7 @@
 -- create or replace package manage_employee is
 --     procedure add_emp(empno int, ename varchar2, esal int, dept varchar2);
 --     procedure edit_emp(empno int, ename varchar2, esal int, dept varchar2);
--- end manage_employee;
+-- end;
 -- /
 
 -- Create package body
@@ -474,7 +473,7 @@
 --     begin
 --         insert into employee values (empno, ename, esal, dept);
 --         dbms_output.put_line('1 row inserted into employee table');
---     end add_emp;
+--     end;
 
 --     procedure edit_emp (
 --         empno int, ename varchar2, esal int, dept varchar2) is
@@ -484,7 +483,7 @@
 --             name = ename, department = dept, salary = esal
 --         where empid = empno;
 --         dbms_output.put_line('1 row updated with employee id ' || empno);
---     end edit_emp;
+--     end;
 -- end;
 -- /
 
@@ -509,24 +508,24 @@
 --     procedure add_emp(eno int, ename varchar2);
 --     procedure add_emp(eno int, ename varchar2, esal int);
 --     procedure add_emp(eno int, ename varchar2, esal int, dept varchar2);
--- end manage_employee;
+-- end;
 -- /
 
 -- create or replace package body manage_employee is
 --     procedure add_emp(eno int, ename varchar2) is
 --     begin
 --         insert into employee values (eno, ename, 2000, 'Finance');
---     end add_emp;
+--     end;
 
 --     procedure add_emp(eno int, ename varchar2, esal int) is
 --     begin
 --         insert into employee values (eno, ename, esal, 'Finance');
---     end add_emp;
+--     end;
 
 --     procedure add_emp(eno int, ename varchar2, esal int, dept varchar2) is
 --     begin
 --         insert into employee values (eno, ename, esal, dept);
---     end add_emp;
+--     end;
 -- end;
 -- /
 
@@ -539,7 +538,7 @@
 -- create or replace package manage_employee is
 --     procedure add_emp(empno int, ename varchar2, esal int, dept varchar2);
 --     procedure edit_emp(empno int, ename varchar2, esal int, dept varchar2);
--- end manage_employee;
+-- end;
 -- /
 
 -- create or replace package body manage_employee is
@@ -549,7 +548,7 @@
 --     procedure add_emp(empno int, ename varchar2, esal int, dept varchar2) is
 --     begin
 --         insert into employee values (empno, ename, esal, dept);
---     end add_emp;
+--     end;
 
 --     procedure edit_emp(empno int, ename varchar2, esal int, dept varchar2) is
 --     begin
@@ -560,12 +559,12 @@
 --             set name = ename, salary = esal, department = dept
 --             where empid = empno;
 --         end if;
---     end edit_emp;
+--     end;
 
 --     procedure get_emp(eno in out int) is
 --     begin
 --         select empid into eno from employee where empid = eno;
---     end get_emp;
+--     end;
 
 -- end;
 -- /
